@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="DXSample.Views.DialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="300">
+
+    <Grid>
+        <dxlc:DataLayoutControl AutoGenerateItems="False"
+                                CurrentItem="{Binding}">
+            <dxlc:DataLayoutItem Label="Name">
+                <dxe:TextEdit EditValue="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" />
+            </dxlc:DataLayoutItem>
+            <dxlc:DataLayoutItem Label="Dialog can be closed">
+                <dxe:CheckEdit EditValue="{Binding AllowCloseDialog, UpdateSourceTrigger=PropertyChanged}" />
+            </dxlc:DataLayoutItem>
+        </dxlc:DataLayoutControl>
+        <dx:DialogFooter>
+            <StackPanel HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <dx:DialogButton Command="{Binding RegisterCommand}"
+                                 DialogResult="OK">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Register" />
+                    </StackPanel>
+                </dx:DialogButton>
+                <dx:DialogButton Command="{Binding CancelCommand}"
+                                 DialogResult="Cancel">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Cancel" />
+                    </StackPanel>
+                </dx:DialogButton>
+            </StackPanel>
+        </dx:DialogFooter>
+    </Grid>
+
+</UserControl>
