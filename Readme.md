@@ -1,3 +1,13 @@
+<!-- default file list -->
+*Files to look at*:
+
+* [MainWindow.xaml](./CS/MainWindow.xaml) (VB: [MainWindow.xaml.vb](./VB/MainWindow.xaml.vb))
+* [MainWindow.xaml.cs](./CS/MainWindow.xaml.cs) (VB: [MainWindow.xaml.vb](./VB/MainWindow.xaml.vb))
+* [DialogViewModel.cs](./CS/ViewModels/DialogViewModel.cs) (VB: [DialogViewModel.vb](./VB/ViewModels/DialogViewModel.vb))
+* [MainViewModel.cs](./CS/ViewModels/MainViewModel.cs) (VB: [MainViewModel.vb](./VB/ViewModels/MainViewModel.vb))
+* [DialogView.xaml](./CS/Views/DialogView.xaml) (VB: [DialogView.xaml](./VB/Views/DialogView.xaml))
+* **[MainView.xaml](./CS/Views/MainView.xaml) (VB: [MainView.xaml](./VB/Views/MainView.xaml))**
+<!-- default file list end -->
 # How to: customize the dialog's footer buttons
 
 
