@@ -1,7 +1,7 @@
 <!-- default file list -->
 *Files to look at*:
 
-* [MainWindow.xaml](./CS/MainWindow.xaml) (VB: [MainWindow.xaml.vb](./VB/MainWindow.xaml.vb))
+* [MainWindow.xaml](./CS/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/MainWindow.xaml))
 * [MainWindow.xaml.cs](./CS/MainWindow.xaml.cs) (VB: [MainWindow.xaml.vb](./VB/MainWindow.xaml.vb))
 * [DialogViewModel.cs](./CS/ViewModels/DialogViewModel.cs) (VB: [DialogViewModel.vb](./VB/ViewModels/DialogViewModel.vb))
 * [MainViewModel.cs](./CS/ViewModels/MainViewModel.cs) (VB: [MainViewModel.vb](./VB/ViewModels/MainViewModel.vb))
