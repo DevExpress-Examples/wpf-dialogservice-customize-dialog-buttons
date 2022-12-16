@@ -13,14 +13,14 @@
 
     <DockPanel>
         <dx:ThemedWindowDialogButtonsControl DockPanel.Dock="Bottom">
-            <dx:ThemedWindowDialogButton
-                Content="OK"
-                DialogResult="OK"
-                Glyph="{dx:DXImage Image=Apply_16x16.png}" />
-            <dx:ThemedWindowDialogButton
-                Content="Cancel"
-                DialogResult="Cancel"
-                Glyph="{dx:DXImage Image=Cancel_16x16.png}" />
+            <dx:ThemedWindowDialogButton Content="OK"
+                                         DialogResult="OK"
+                                         Command="{Binding RegisterCommand}"
+                                         Glyph="{dx:DXImage Image=Apply_16x16.png}" />
+            <dx:ThemedWindowDialogButton Content="Cancel"
+                                         DialogResult="Cancel"
+                                         Command="{Binding CancelCommand}"
+                                         Glyph="{dx:DXImage Image=Cancel_16x16.png}" />
         </dx:ThemedWindowDialogButtonsControl>
         <dxlc:DataLayoutControl AutoGenerateItems="False" CurrentItem="{Binding}">
             <dxlc:DataLayoutItem Label="Name">
