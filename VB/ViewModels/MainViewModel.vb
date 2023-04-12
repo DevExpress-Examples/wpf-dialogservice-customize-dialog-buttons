@@ -1,45 +1,52 @@
-﻿Imports System.Windows.Input
+Imports System.Windows.Input
 Imports DevExpress.Mvvm
 
 Namespace DXSample.ViewModels
+
     Public Class MainViewModel
         Inherits ViewModelBase
 
-        Private privateShowDialogCommand As ICommand
-        Public Property ShowDialogCommand() As ICommand
+        Private _ShowDialogCommand As ICommand, _ShowMessageBoxCommand As ICommand, _DialogViewModel As DialogViewModel
+
+        Public Property ShowDialogCommand As ICommand
             Get
-                Return privateShowDialogCommand
+                Return _ShowDialogCommand
             End Get
+
             Private Set(ByVal value As ICommand)
-                privateShowDialogCommand = value
+                _ShowDialogCommand = value
             End Set
         End Property
-        Private privateShowMessageBoxCommand As ICommand
-        Public Property ShowMessageBoxCommand() As ICommand
+
+        Public Property ShowMessageBoxCommand As ICommand
             Get
-                Return privateShowMessageBoxCommand
+                Return _ShowMessageBoxCommand
             End Get
+
             Private Set(ByVal value As ICommand)
-                privateShowMessageBoxCommand = value
+                _ShowMessageBoxCommand = value
             End Set
         End Property
-        Protected ReadOnly Property MessageService() As IMessageBoxService
+
+        Protected ReadOnly Property MessageService As IMessageBoxService
             Get
                 Return GetService(Of IMessageBoxService)()
             End Get
         End Property
-        Protected ReadOnly Property DialogService() As IDialogService
+
+        Protected ReadOnly Property DialogService As IDialogService
             Get
                 Return GetService(Of IDialogService)()
             End Get
         End Property
-        Private privateDialogViewModel As DialogViewModel
-        Protected Property DialogViewModel() As DialogViewModel
+
+        Protected Property DialogViewModel As DialogViewModel
             Get
-                Return privateDialogViewModel
+                Return _DialogViewModel
             End Get
+
             Private Set(ByVal value As DialogViewModel)
-                privateDialogViewModel = value
+                _DialogViewModel = value
             End Set
         End Property
 
@@ -53,6 +60,7 @@ Namespace DXSample.ViewModels
             Dim dialogResult As MessageResult = DialogService.ShowDialog(MessageButton.OKCancel, "DialogWindow", DialogViewModel)
             MessageService.Show("Dialog Clicked Button: " & dialogResult)
         End Sub
+
         Private Sub OnShowMessageBoxCommandExecute()
             MessageService.Show("This is a message box", "DXMessageBoxService", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information)
         End Sub
