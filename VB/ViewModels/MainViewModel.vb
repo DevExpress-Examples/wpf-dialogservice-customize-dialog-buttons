@@ -1,68 +1,70 @@
-Imports System.Windows.Input
 Imports DevExpress.Mvvm
+Imports DevExpress.Mvvm.DataAnnotations
+Imports System
+Imports System.ComponentModel
 
 Namespace DXSample.ViewModels
 
     Public Class MainViewModel
-        Inherits ViewModelBase
+        Inherits DevExpress.Mvvm.ViewModelBase
 
-        Private _ShowDialogCommand As ICommand, _ShowMessageBoxCommand As ICommand, _DialogViewModel As DialogViewModel
-
-        Public Property ShowDialogCommand As ICommand
+        Public Property FirstName As String
             Get
-                Return _ShowDialogCommand
+                Return GetValue(Of String)()
             End Get
 
-            Private Set(ByVal value As ICommand)
-                _ShowDialogCommand = value
+            Set(ByVal value As String)
+                SetValue(value)
             End Set
         End Property
 
-        Public Property ShowMessageBoxCommand As ICommand
+        Public Property LastName As String
             Get
-                Return _ShowMessageBoxCommand
+                Return GetValue(Of String)()
             End Get
 
-            Private Set(ByVal value As ICommand)
-                _ShowMessageBoxCommand = value
+            Set(ByVal value As String)
+                SetValue(value)
             End Set
         End Property
 
-        Protected ReadOnly Property MessageService As IMessageBoxService
+        Public Property DisplayName As String
             Get
-                Return GetService(Of IMessageBoxService)()
+                Return GetValue(Of String)()
             End Get
+
+            Set(ByVal value As String)
+                SetValue(value)
+            End Set
         End Property
 
         Protected ReadOnly Property DialogService As IDialogService
             Get
-                Return GetService(Of IDialogService)()
+                Return GetService(Of DevExpress.Mvvm.IDialogService)()
             End Get
         End Property
 
-        Protected Property DialogViewModel As DialogViewModel
-            Get
-                Return _DialogViewModel
-            End Get
-
-            Private Set(ByVal value As DialogViewModel)
-                _DialogViewModel = value
-            End Set
-        End Property
-
-        Public Sub New()
-            ShowMessageBoxCommand = New DelegateCommand(AddressOf OnShowMessageBoxCommandExecute)
-            ShowDialogCommand = New DelegateCommand(AddressOf OnShowDialogCommandExecute)
-            DialogViewModel = New DialogViewModel()
+        <DevExpress.Mvvm.DataAnnotations.CommandAttribute>
+        Public Sub ShowDialog()
+            Dim dialogViewModel = New DXSample.ViewModels.DialogViewModel() With {.FirstName = Me.FirstName, .LastName = Me.LastName}
+            Dim buttonApply = New DevExpress.Mvvm.UICommand() With {.Id = "apply", .Caption = "Apply", .Command = New DevExpress.Mvvm.DelegateCommand(Of System.ComponentModel.CancelEventArgs)(Sub(cancelArgs)
+                Try
+                    Me.ApplyMethod(dialogViewModel.FirstName, dialogViewModel.LastName)
+                Catch e As System.Exception
+                    cancelArgs.Cancel = True
+                End Try
+            ' Disable the button if one of the fields is empty:
+            End Sub, Function(cancelArgs) Not String.IsNullOrEmpty(dialogViewModel.FirstName) AndAlso Not String.IsNullOrEmpty(dialogViewModel.LastName)), .Glyph = New System.Uri("pack://application:,,,/DevExpress.Images.v22.2;component/SvgImages/Icon Builder/Actions_CheckCircled.svg"), .IsDefault = True, .IsCancel = False}
+            Dim buttonCancel = New DevExpress.Mvvm.UICommand() With {.Id = "cancel", .Caption = "Cancel", .Command = Nothing, .Glyph = New System.Uri("pack://application:,,,/DevExpress.Images.v22.2;component/SvgImages/Icon Builder/Actions_DeleteCircled.svg"), .IsDefault = False, .IsCancel = True}
+            dialogViewModel.UICommandApply = buttonApply
+            dialogViewModel.UICommandCancel = buttonCancel
+            Me.DialogService.ShowDialog(dialogCommands:=New DevExpress.Mvvm.UICommand() {}, title:="Edit Dialog", viewModel:=dialogViewModel)
         End Sub
 
-        Private Sub OnShowDialogCommandExecute()
-            Dim dialogResult As MessageResult = DialogService.ShowDialog(MessageButton.OKCancel, "DialogWindow", DialogViewModel)
-            MessageService.Show("Dialog Clicked Button: " & dialogResult)
-        End Sub
-
-        Private Sub OnShowMessageBoxCommandExecute()
-            MessageService.Show("This is a message box", "DXMessageBoxService", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information)
+        Public Sub ApplyMethod(ByVal firstName As String, ByVal lastName As String)
+            Me.FirstName = firstName
+            Me.LastName = lastName
+            Me.DisplayName = Me.FirstName & " " & Me.LastName
         End Sub
     End Class
 End Namespace

@@ -1,77 +1,75 @@
-Imports System.ComponentModel
 Imports DevExpress.Mvvm
+Imports DevExpress.Mvvm.DataAnnotations
+Imports DevExpress.Xpf.Core
+Imports System.ComponentModel
 
 Namespace DXSample.ViewModels
 
     Public Class DialogViewModel
         Inherits ViewModelBase
 
-        Private _RegisterCommand As ICommand(Of System.ComponentModel.CancelEventArgs), _CancelCommand As ICommand(Of System.ComponentModel.CancelEventArgs)
-
-        Public Property RegisterCommand As ICommand(Of CancelEventArgs)
+        Public Property FirstName As String
             Get
-                Return _RegisterCommand
-            End Get
-
-            Private Set(ByVal value As ICommand(Of CancelEventArgs))
-                _RegisterCommand = value
-            End Set
-        End Property
-
-        Public Property CancelCommand As ICommand(Of CancelEventArgs)
-            Get
-                Return _CancelCommand
-            End Get
-
-            Private Set(ByVal value As ICommand(Of CancelEventArgs))
-                _CancelCommand = value
-            End Set
-        End Property
-
-        Public Property AllowCloseDialog As Boolean
-            Get
-                Return GetProperty(Function() Me.AllowCloseDialog)
-            End Get
-
-            Set(ByVal value As Boolean)
-                SetProperty(Function() AllowCloseDialog, value)
-            End Set
-        End Property
-
-        Public Property UserName As String
-            Get
-                Return GetProperty(Function() Me.UserName)
+                Return GetValue(Of String)()
             End Get
 
             Set(ByVal value As String)
-                SetProperty(Function() UserName, value)
+                SetValue(value)
             End Set
         End Property
 
-        Public Sub New()
-            AllowCloseDialog = True
-            RegisterCommand = New DelegateCommand(Of CancelEventArgs)(AddressOf OnRegisterCommandExecute, AddressOf OnRegisterCommandCanExecute)
-            CancelCommand = New DelegateCommand(Of CancelEventArgs)(AddressOf OnCancelCommandExecute, AddressOf OnCancelCommandCanExecute)
-        End Sub
+        Public Property LastName As String
+            Get
+                Return GetValue(Of String)()
+            End Get
 
-        Private Sub OnRegisterCommandExecute(ByVal parameter As CancelEventArgs)
-            If Not AllowCloseDialog Then
-                parameter.Cancel = True
+            Set(ByVal value As String)
+                SetValue(value)
+            End Set
+        End Property
+
+        Public Property UICommandApply As UICommand
+            Get
+                Return GetValue(Of UICommand)()
+            End Get
+
+            Set(ByVal value As UICommand)
+                SetValue(value)
+            End Set
+        End Property
+
+        Public Property UICommandCancel As UICommand
+            Get
+                Return GetValue(Of UICommand)()
+            End Get
+
+            Set(ByVal value As UICommand)
+                SetValue(value)
+            End Set
+        End Property
+
+        Protected ReadOnly Property CurrentDialogService As ICurrentDialogService
+            Get
+                Return GetService(Of ICurrentDialogService)()
+            End Get
+        End Property
+
+        Protected ReadOnly Property MessageBoxService As IMessageBoxService
+            Get
+                Return GetService(Of IMessageBoxService)()
+            End Get
+        End Property
+
+        <Command>
+        Public Sub DialogClosing(ByVal args As CancelEventArgs)
+            Dim dialogResult = TryCast(CurrentDialogService, CurrentDialogService).ActualWindow.DialogResult
+            If dialogResult IsNot Nothing Then Return
+            Dim result = MessageBoxService.ShowMessage(caption:="Close", messageBoxText:="Do you want to discard changes?", button:=MessageButton.YesNo, defaultResult:=MessageResult.No, icon:=MessageIcon.Question)
+            If result = MessageResult.Yes Then
+                CurrentDialogService.Close(MessageResult.Cancel)
+            Else
+                args.Cancel = True
             End If
         End Sub
-
-        Private Function OnRegisterCommandCanExecute(ByVal parameter As CancelEventArgs) As Boolean
-            Return Not String.IsNullOrEmpty(UserName)
-        End Function
-
-        Private Sub OnCancelCommandExecute(ByVal parameter As CancelEventArgs)
-            If Not AllowCloseDialog Then
-                parameter.Cancel = True
-            End If
-        End Sub
-
-        Private Function OnCancelCommandCanExecute(ByVal parameter As CancelEventArgs) As Boolean
-            Return True
-        End Function
     End Class
 End Namespace
