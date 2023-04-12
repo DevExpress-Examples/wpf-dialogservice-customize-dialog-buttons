@@ -1,38 +1,33 @@
-﻿using System.ComponentModel;
-using DevExpress.Mvvm;
+﻿using DevExpress.Mvvm;
+using DevExpress.Mvvm.DataAnnotations;
+using DevExpress.Xpf.Core;
+using System.ComponentModel;
 
 namespace DXSample.ViewModels {
     public class DialogViewModel : ViewModelBase {
-        public ICommand<CancelEventArgs> RegisterCommand { get; private set; }
-        public ICommand<CancelEventArgs> CancelCommand { get; private set; }
-        public bool AllowCloseDialog {
-            get { return GetProperty(() => AllowCloseDialog); }
-            set { SetProperty(() => AllowCloseDialog, value); }
-        }
-        public string UserName {
-            get { return GetProperty(() => UserName); }
-            set { SetProperty(() => UserName, value); }
-        }
-        public DialogViewModel() {
-            AllowCloseDialog = true;
-            RegisterCommand = new DelegateCommand<CancelEventArgs>(OnRegisterCommandExecute, OnRegisterCommandCanExecute);
-            CancelCommand = new DelegateCommand<CancelEventArgs>(OnCancelCommandExecute, OnCancelCommandCanExecute);
-        }
-        void OnRegisterCommandExecute(CancelEventArgs parameter) {
-            if (!AllowCloseDialog) {
-                parameter.Cancel = true;
+        public string FirstName { get { return GetValue<string>(); } set { SetValue(value); } }
+        public string LastName { get { return GetValue<string>(); } set { SetValue(value); } }
+        public UICommand UICommandApply { get { return GetValue<UICommand>(); } set { SetValue(value); } }
+        public UICommand UICommandCancel { get { return GetValue<UICommand>(); } set { SetValue(value); } }
+        protected ICurrentDialogService CurrentDialogService { get { return GetService<ICurrentDialogService>(); } }
+        protected IMessageBoxService MessageBoxService { get { return GetService<IMessageBoxService>(); } }
+
+        [Command]
+        public void DialogClosing(CancelEventArgs args) {
+            var dialogResult = (CurrentDialogService as CurrentDialogService).ActualWindow.DialogResult;
+            if (dialogResult != null) return;
+            var result = MessageBoxService.ShowMessage(
+                caption: "Close",
+                messageBoxText: "Do you want to discard changes?",
+                button: MessageButton.YesNo,
+                defaultResult: MessageResult.No,
+                icon: MessageIcon.Question
+            );
+            if (result == MessageResult.Yes) {
+                CurrentDialogService.Close(MessageResult.Cancel);
+            } else {
+                args.Cancel = true;
             }
-        }
-        bool OnRegisterCommandCanExecute(CancelEventArgs parameter) {
-            return !string.IsNullOrEmpty(UserName);
-        }
-        void OnCancelCommandExecute(CancelEventArgs parameter) {
-            if (!AllowCloseDialog) {
-                parameter.Cancel = true;
-            }
-        }
-        bool OnCancelCommandCanExecute(CancelEventArgs parameter) {
-            return true;
         }
     }
 }
