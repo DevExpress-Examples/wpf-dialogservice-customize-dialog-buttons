@@ -16,7 +16,7 @@ Dialog buttons are objects of the [ThemedWindowDialogButton](https://docs.devexp
 
 1. Create [ThemedWindowDialogButton](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.ThemedWindowDialogButton) objects and define their properties.
 2. Add these objects to the `ThemedWindowDialogButtonsControl` container and specify its position.
-3. Set the [ThemedWindowOptions.UseCustomDialogFooter](http://docs.devexpress.devx/WPF/DevExpress.Xpf.Core.Native.ThemedWindowOptions.UseCustomDialogFooter) attached property to `true` to hide auto-generated buttons.
+3. Set the [ThemedWindowOptions.UseCustomDialogFooter](http://docs.devexpress.com/WPF/DevExpress.Xpf.Core.Native.ThemedWindowOptions.UseCustomDialogFooter) attached property to `true` to hide auto-generated buttons.
 
 The [ThemedWindowDialogButton](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.ThemedWindowDialogButton) class contains [UICommand](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.ThemedWindowDialogButton.UICommand) and [DialogResult](https://docs.devexpress.com/WPF/DevExpress.Xpf.Core.ThemedWindowDialogButton.DialogResult) properties. These properties allow you to specify the value returned by the `ShowDialog` method when a user clicks the button.
 
