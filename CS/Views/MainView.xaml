@@ -4,7 +4,7 @@
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
     xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-    xmlns:dxmvvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -16,7 +16,7 @@
         <ViewModels:MainViewModel />
     </UserControl.DataContext>
 
-    <dxmvvvm:Interaction.Behaviors>
+    <dxmvvm:Interaction.Behaviors>
         <dx:DialogService DialogWindowStartupLocation="CenterOwner">
             <dx:DialogService.ViewTemplate>
                 <DataTemplate>
@@ -32,7 +32,7 @@
                 </Style>
             </dx:DialogService.DialogStyle>
         </dx:DialogService>
-    </dxmvvvm:Interaction.Behaviors>
+    </dxmvvm:Interaction.Behaviors>
 
 
     <StackPanel Orientation="Vertical"
