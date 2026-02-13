@@ -43,7 +43,7 @@ If you use dialog buttons from the `MessageButton` enumeration, you can use the 
 * [Use DialogService to Show a Modal Dialog Window](https://github.com/DevExpress-Examples/wpf-mvvm-framework-ui-services-dialogservice)
 * [WPF DialogService - Close an Opened Dialog and Specify the Dialog Result](https://github.com/DevExpress-Examples/wpf-dialogservice-close-opened-dialog-and-specify-dialog-result)
 <!-- feedback -->
-## Does this example address your development requirements/objectives?
+## Does This Example Address Your Development Requirements/Objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-dialogservice-customize-dialog-buttons&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-dialogservice-customize-dialog-buttons&~~~was_helpful=no)
 
